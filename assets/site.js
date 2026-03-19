@@ -411,15 +411,14 @@
   }
 
   function initSiteTheme() {
-    const themeButtons = Array.from(document.querySelectorAll("[data-theme-toggle]"));
+    const themeButtons = Array.from(document.querySelectorAll("[data-theme-option]"));
     const supportedThemes = new Set(["light", "dark"]);
 
     function updateButton(themeButton, activeTheme) {
-      const nextTheme = activeTheme === "dark" ? "light" : "dark";
-      themeButton.textContent = nextTheme[0].toUpperCase() + nextTheme.slice(1);
-      themeButton.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
-      themeButton.setAttribute("aria-pressed", activeTheme === "dark" ? "true" : "false");
-      themeButton.dataset.nextTheme = nextTheme;
+      const buttonTheme = themeButton.dataset.themeOption;
+      const isActive = buttonTheme === activeTheme;
+      themeButton.classList.toggle("is-active", isActive);
+      themeButton.setAttribute("aria-pressed", isActive ? "true" : "false");
     }
 
     function applyTheme(theme, persist) {
@@ -464,7 +463,7 @@
 
     themeButtons.forEach((themeButton) => {
       themeButton.addEventListener("click", () => {
-        applyTheme(themeButton.dataset.nextTheme || "dark", true);
+        applyTheme(themeButton.dataset.themeOption || "light", true);
       });
     });
   }
