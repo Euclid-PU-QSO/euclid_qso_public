@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Euclid QSO — Public Science Portal</title>
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #1a1a2e;
+      background: #f8f9fc;
+      line-height: 1.65;
+    }
+    a { color: #5b77c5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; }
+
+    /* ── Navigation ───────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 2.5rem;
+      background: rgba(10, 10, 40, 0.96);
+      backdrop-filter: blur(8px);
+      color: #e8eaf6;
+    }
+    .nav-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #c5cbe8;
+    }
+    .nav-brand span { color: #7c9ff0; }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.8rem;
+    }
+    nav ul li a {
+      color: #b0b8d8;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    nav ul li a:hover { color: #fff; text-decoration: none; }
+
+    /* ── Hero ─────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      background: linear-gradient(135deg, #0a0a28 0%, #0d1b4b 50%, #1a0a3c 100%);
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 40%, rgba(100,120,220,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 60%, rgba(160,80,220,0.14) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      display: inline-block;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(92, 119, 197, 0.25);
+      border: 1px solid rgba(92, 119, 197, 0.5);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #a0b8f0;
+      margin-bottom: 1.4rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #c5d4f8, #e0c8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: #9aafd8;
+      max-width: 620px;
+      margin-bottom: 2.2rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-weight: 600;
+      transition: opacity 0.2s, transform 0.15s;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); text-decoration: none; }
+    .btn-primary {
+      background: #5b77c5;
+      color: #fff;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #a0b8f0;
+      border: 1.5px solid rgba(160,184,240,0.5);
+    }
+
+    /* ── Section commons ──────────────────────────────────────────── */
+    section { padding: 4.5rem 2rem; }
+    .container { max-width: 1060px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5b77c5;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      color: #12174f;
+    }
+    .section-intro {
+      font-size: 1.05rem;
+      color: #4a5068;
+      max-width: 680px;
+      margin-bottom: 2.8rem;
+    }
+
+    /* ── Stats bar ────────────────────────────────────────────────── */
+    .stats-bar {
+      background: #0d1b4b;
+      color: #c5d4f8;
+      padding: 2rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1.5rem;
+      max-width: 1060px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #7c9ff0;
+      display: block;
+    }
+    .stat-label { font-size: 0.82rem; color: #8892ba; }
+
+    /* ── About ────────────────────────────────────────────────────── */
+    #about { background: #fff; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    @media (max-width: 680px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-text p + p { margin-top: 1rem; }
+    .about-logo-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      align-items: flex-start;
+    }
+    .badge-list { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.4rem; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.28rem 0.7rem;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: #eef1fc;
+      color: #3450a8;
+      border: 1px solid #c9d4f0;
+    }
+
+    /* ── Science goals ────────────────────────────────────────────── */
+    #science { background: #f3f5fb; }
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .goal-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid #dde3f4;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .goal-card:hover { box-shadow: 0 6px 24px rgba(50,70,180,0.1); transform: translateY(-3px); }
+    .goal-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+    .goal-card h3 { font-size: 1rem; font-weight: 700; color: #12174f; margin-bottom: 0.4rem; }
+    .goal-card p { font-size: 0.88rem; color: #5a6080; }
+
+    /* ── Data products ────────────────────────────────────────────── */
+    #data { background: #fff; }
+    .data-table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #0d1b4b;
+      color: #c5d4f8;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+    }
+    td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid #e8eaf6;
+      color: #2a2e50;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f3f5fb; }
+    .status-tag {
+      display: inline-block;
+      padding: 0.18rem 0.55rem;
+      border-radius: 3px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+    .status-available { background: #d4f0e0; color: #1a6b3c; }
+    .status-planned   { background: #fdf0d4; color: #7a4d00; }
+    .status-internal  { background: #e8eaf6; color: #3c4080; }
+
+    /* ── Publications ─────────────────────────────────────────────── */
+    #publications { background: #f3f5fb; }
+    .pub-list { display: flex; flex-direction: column; gap: 1.2rem; }
+    .pub-card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1.3rem 1.6rem;
+      border: 1px solid #dde3f4;
+      border-left: 4px solid #5b77c5;
+    }
+    .pub-card h3 { font-size: 0.97rem; font-weight: 700; color: #12174f; margin-bottom: 0.3rem; }
+    .pub-meta { font-size: 0.8rem; color: #7a80a0; margin-bottom: 0.4rem; }
+    .pub-card p { font-size: 0.85rem; color: #4a5068; }
+
+    /* ── Team ─────────────────────────────────────────────────────── */
+    #team { background: #fff; }
+    .team-note {
+      background: #eef1fc;
+      border: 1px solid #c9d4f0;
+      border-radius: 8px;
+      padding: 1.2rem 1.6rem;
+      font-size: 0.9rem;
+      color: #3450a8;
+      margin-top: 1rem;
+    }
+
+    /* ── Contact ──────────────────────────────────────────────────── */
+    #contact {
+      background: linear-gradient(135deg, #0d1b4b 0%, #1a0a3c 100%);
+      color: #c5d4f8;
+      text-align: center;
+    }
+    #contact .section-title { color: #e0e8ff; }
+    #contact .section-intro { color: #8892ba; margin: 0 auto 2rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.2rem; }
+
+    /* ── Footer ───────────────────────────────────────────────────── */
+    footer {
+      background: #070714;
+      color: #4a5080;
+      text-align: center;
+      padding: 1.4rem 2rem;
+      font-size: 0.8rem;
+    }
+    footer a { color: #6070a0; }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ──────────────────────────────────────────────────── -->
+<nav>
+  <span class="nav-brand">Euclid <span>QSO</span></span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#science">Science</a></li>
+    <li><a href="#data">Data</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────────── -->
+<header class="hero">
+  <span class="hero-tag">Euclid Mission · QSO Working Package</span>
+  <h1>High-Redshift Quasar<br>Science Portal</h1>
+  <p class="hero-sub">
+    Public science portal for the Euclid high-z quasar team — exploring the most
+    luminous objects in the early Universe.
+  </p>
+  <div class="hero-buttons">
+    <a class="btn btn-primary" href="#science">Explore Science</a>
+    <a class="btn btn-secondary" href="https://github.com/Euclid-PU-QSO/euclid_qso_public" target="_blank" rel="noopener">GitHub Repository</a>
+  </div>
+</header>
+
+<!-- ── Stats bar ───────────────────────────────────────────────────── -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div>
+      <span class="stat-number">~26,000</span>
+      <span class="stat-label">deg² survey area</span>
+    </div>
+    <div>
+      <span class="stat-number">10<sup>6</sup>+</span>
+      <span class="stat-label">expected quasars</span>
+    </div>
+    <div>
+      <span class="stat-number">z &gt; 6</span>
+      <span class="stat-label">high-z frontier</span>
+    </div>
+    <div>
+      <span class="stat-number">2024–</span>
+      <span class="stat-label">survey operations</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── About ───────────────────────────────────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About</p>
+        <h2 class="section-title">Euclid QSO Working Package</h2>
+        <p>
+          The <strong>Euclid</strong> space telescope, launched by the European Space Agency (ESA)
+          in July 2023, is designed to map the large-scale structure of the Universe across an
+          unprecedented wide-field survey. The <strong>QSO Working Package (WP)</strong> focuses
+          on detecting, characterising, and scientifically exploiting the population of quasars —
+          in particular at high redshift (z&nbsp;&gt;&nbsp;2.5).
+        </p>
+        <p>
+          This public portal provides access to data products, catalogues, and scientific results
+          produced by the Euclid QSO team. Our work spans photometric selection, spectroscopic
+          confirmation, and multi-wavelength analysis of quasar candidates across the Euclid
+          wide-field and deep surveys.
+        </p>
+        <div class="badge-list">
+          <span class="badge">🔭 ESA Euclid</span>
+          <span class="badge">🌌 High-z Quasars</span>
+          <span class="badge">📡 Multi-wavelength</span>
+          <span class="badge">📊 Open Data</span>
+        </div>
+      </div>
+      <div class="about-logo-block">
+        <p><strong>Key survey characteristics</strong></p>
+        <ul style="margin-left:1.2rem; color:#4a5068; font-size:0.93rem; line-height:2;">
+          <li>VIS optical photometry (550–900 nm)</li>
+          <li>NISP near-infrared photometry (Y, J, H bands)</li>
+          <li>NISP slitless spectroscopy (0.92–1.89 µm)</li>
+          <li>Wide Survey: ≈ 14,000 deg² to m<sub>AB</sub> ≈ 24.5</li>
+          <li>Deep Survey: ≈ 53 deg² to m<sub>AB</sub> ≈ 26.5</li>
+          <li>Euclid Auxiliary Fields for calibration</li>
+        </ul>
+        <p style="font-size:0.82rem; color:#7a80a0; margin-top:0.5rem;">
+          Data releases follow the
+          <a href="https://www.euclid-ec.org/" target="_blank" rel="noopener">Euclid Consortium</a>
+          publication policy.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Science goals ───────────────────────────────────────────────── -->
+<section id="science">
+  <div class="container">
+    <p class="section-label">Science Goals</p>
+    <h2 class="section-title">What We Are Investigating</h2>
+    <p class="section-intro">
+      The Euclid QSO team pursues a wide range of science objectives, from cosmological
+      probes to the study of the earliest epochs of black-hole growth.
+    </p>
+    <div class="goals-grid">
+      <div class="goal-card">
+        <span class="goal-icon">🕳️</span>
+        <h3>Supermassive Black Hole Growth</h3>
+        <p>
+          Characterising the quasar luminosity function and black-hole mass function
+          across cosmic time, tracing the build-up of the most massive black holes.
+        </p>
+      </div>
+      <div class="goal-card">
+        <span class="goal-icon">🌅</span>
+        <h3>Epoch of Reionisation Probes</h3>
+        <p>
+          Detecting quasars at z&nbsp;&gt;&nbsp;6 to probe the intergalactic medium
+          during and after the epoch of hydrogen reionisation.
+        </p>
+      </div>
+      <div class="goal-card">
+        <span class="goal-icon">📐</span>
+        <h3>Large-Scale Structure</h3>
+        <p>
+          Using the quasar angular power spectrum and 3D clustering to constrain
+          cosmological parameters and test dark energy models.
+        </p>
+      </div>
+      <div class="goal-card">
+        <span class="goal-icon">🔦</span>
+        <h3>Quasar–Host Co-evolution</h3>
+        <p>
+          Leveraging Euclid's spatial resolution to measure the morphology and
+          stellar masses of quasar host galaxies across cosmic history.
+        </p>
+      </div>
+      <div class="goal-card">
+        <span class="goal-icon">⚗️</span>
+        <h3>Spectral Energy Distributions</h3>
+        <p>
+          Combining Euclid photometry with external surveys (LSST, eROSITA, WISE)
+          to build multi-wavelength SEDs and constrain physical quasar properties.
+        </p>
+      </div>
+      <div class="goal-card">
+        <span class="goal-icon">🧭</span>
+        <h3>Photometric Selection</h3>
+        <p>
+          Developing and validating machine-learning and template-fitting pipelines
+          for robust photometric quasar selection and redshift estimation.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Data products ───────────────────────────────────────────────── -->
+<section id="data">
+  <div class="container">
+    <p class="section-label">Data Products</p>
+    <h2 class="section-title">Public Catalogues &amp; Resources</h2>
+    <p class="section-intro">
+      Data products from the Euclid QSO team are made publicly available following
+      the Euclid Consortium data-release schedule.
+    </p>
+    <div class="data-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Description</th>
+            <th>Coverage</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>QSO Photometric Catalogue</strong></td>
+            <td>Photometrically-selected quasar candidates with photo-z estimates</td>
+            <td>Wide Survey</td>
+            <td><span class="status-tag status-planned">Planned</span></td>
+          </tr>
+          <tr>
+            <td><strong>High-z QSO Sample (z&gt;5)</strong></td>
+            <td>Spectroscopically-confirmed high-redshift quasars from Euclid</td>
+            <td>Wide + Deep</td>
+            <td><span class="status-tag status-planned">Planned</span></td>
+          </tr>
+          <tr>
+            <td><strong>Auxiliary Field QSO Catalogue</strong></td>
+            <td>Quasar catalogue in Euclid Auxiliary Fields with multi-band photometry</td>
+            <td>EAF</td>
+            <td><span class="status-tag status-internal">Internal</span></td>
+          </tr>
+          <tr>
+            <td><strong>Source Code &amp; Pipelines</strong></td>
+            <td>Selection pipelines and analysis code</td>
+            <td>—</td>
+            <td><span class="status-tag status-available">Available</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:0.82rem; color:#7a80a0; margin-top:1rem;">
+      Data releases are coordinated with the
+      <a href="https://www.cosmos.esa.int/web/euclid/euclid-survey" target="_blank" rel="noopener">Euclid survey schedule</a>.
+      Please check back for updates.
+    </p>
+  </div>
+</section>
+
+<!-- ── Publications ────────────────────────────────────────────────── -->
+<section id="publications">
+  <div class="container">
+    <p class="section-label">Publications</p>
+    <h2 class="section-title">Key Papers</h2>
+    <p class="section-intro">
+      Scientific results from the Euclid QSO working package, as well as relevant
+      Euclid mission papers.
+    </p>
+    <div class="pub-list">
+      <div class="pub-card">
+        <h3>Euclid. I. Overview of the Euclid mission</h3>
+        <p class="pub-meta">Euclid Collaboration · 2024 · A&amp;A 662, A112</p>
+        <p>
+          The Euclid Collaboration overview paper describing the mission design,
+          survey strategy, science goals, and organisation of the Euclid Consortium.
+        </p>
+      </div>
+      <div class="pub-card">
+        <h3>Quasar Selection in Euclid: Expected Yields and Redshift Distributions</h3>
+        <p class="pub-meta">Euclid Collaboration (QSO WP) · in preparation</p>
+        <p>
+          Forecasts for the number counts, redshift distributions, and photometric purity
+          of quasars selected from the Euclid wide and deep surveys.
+        </p>
+      </div>
+      <div class="pub-card">
+        <h3>High-Redshift Quasar Science with Euclid</h3>
+        <p class="pub-meta">Euclid Collaboration (QSO WP) · in preparation</p>
+        <p>
+          Science forecasts for high-z (z&nbsp;&gt;&nbsp;5) quasar detection and the
+          resulting constraints on black-hole mass functions and reionisation history.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Team ─────────────────────────────────────────────────────────── -->
+<section id="team">
+  <div class="container">
+    <p class="section-label">Team</p>
+    <h2 class="section-title">QSO Working Package</h2>
+    <p class="section-intro">
+      The Euclid QSO Working Package brings together researchers from institutions
+      across the Euclid Consortium to carry out quasar science.
+    </p>
+    <div class="team-note">
+      📋 The team roster is maintained within the Euclid Consortium. For collaboration
+      enquiries, please use the contact details below or reach out via the
+      <a href="https://github.com/Euclid-PU-QSO" target="_blank" rel="noopener">Euclid-PU-QSO GitHub organisation</a>.
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ──────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label" style="color:#7c9ff0;">Contact</p>
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="section-intro">
+      Questions about our data products, science results, or collaboration opportunities?
+      Find us on GitHub or reach out to the QSO Working Package leads.
+    </p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="https://github.com/Euclid-PU-QSO/euclid_qso_public" target="_blank" rel="noopener">
+        GitHub Repository
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/Euclid-PU-QSO" target="_blank" rel="noopener">
+        GitHub Organisation
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ───────────────────────────────────────────────────────── -->
+<footer>
+  <p>
+    © 2024 Euclid QSO Working Package ·
+    <a href="https://github.com/Euclid-PU-QSO/euclid_qso_public" target="_blank" rel="noopener">GitHub</a>
+    · Euclid is an ESA mission with contributions from NASA.
+  </p>
+</footer>
+
+</body>
+</html>
