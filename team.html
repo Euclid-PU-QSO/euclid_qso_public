@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Euclid High-z Quasar Team</title>
+    <title>Team | Euclid High-z Quasar Team</title>
     <meta
       name="description"
-      content="Prototype website for the Euclid high-z quasar team, featuring team science, papers, and public data."
+      content="Prototype team page for the Euclid high-z quasar team."
     />
     <script>
       (function () {
@@ -27,7 +27,7 @@
     <script defer src="assets/site-data.js"></script>
     <script defer src="assets/site.js"></script>
   </head>
-  <body data-page="home">
+  <body data-page="team">
     <div class="site-scene" aria-hidden="true">
       <img
         class="site-blackhole-image site-blackhole-light"
@@ -66,42 +66,40 @@
       </header>
 
       <main>
-        <section class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow">Early-universe quasars with Euclid</p>
-            <h1>
-              <span class="hero-title-line">Charting luminous black holes</span>
-              <span class="hero-title-line">across the first billion years.</span>
-            </h1>
-            <p class="lede">
-              This public portal presents the Euclid high-z quasar team as a
-              public-facing science program. The interactive Explore and Data
-              pages use an illustrative demo sample with intentionally perturbed
-              source properties and placeholder previews.
-            </p>
-            <div class="hero-actions">
-              <a class="button primary" href="explore.html">Explore</a>
-              <a class="button secondary" href="papers.html">Browse Team Papers</a>
+        <section class="card-section">
+          <article class="team-intro-panel">
+            <div class="team-intro-layout">
+              <img
+                class="team-consortium-logo"
+                src="assets/logo/Euclid_consortium_logo.png"
+                alt="Euclid Consortium logo"
+              />
+              <div class="team-intro-copy">
+                <p class="eyebrow">Team</p>
+                <h1>Euclid high-z quasar team</h1>
+                <p class="lede">
+                  We are an international collaboration within the quasar working
+                  package of the Euclid Consortium Primeval Universe Science Working
+                  Group, bringing together survey selection, image validation,
+                  spectroscopy, and catalog-building for the highest-redshift quasars
+                  found by Euclid.
+                </p>
+                <p>
+                  This page is intended as a public-facing overview of the people behind
+                  the program, with room for member portraits, institutional links, and
+                  future project roles as the team roster expands.
+                </p>
+              </div>
             </div>
-          </div>
+          </article>
+        </section>
 
-          <aside class="hero-panel">
-            <div class="metric-strip">
-              <article>
-                <span>Total Euclid quasars</span>
-                <strong id="home-metric-quasars">0</strong>
-              </article>
-              <article>
-                <span>Published papers</span>
-                <strong id="home-metric-papers">0</strong>
-              </article>
-            </div>
-            <p>
-              The design direction is editorial rather than sci-fi: survey-grid
-              structure, paper-like spacing, and astronomy figures used as content
-              instead of decoration.
-            </p>
-          </aside>
+        <section class="card-section">
+          <div class="section-heading section-heading-row">
+            <h2>Team members</h2>
+            <div class="paper-view-toggle" id="team-view-toggle" aria-label="Team view mode"></div>
+          </div>
+          <div class="team-grid" id="team-grid"></div>
         </section>
       </main>
 

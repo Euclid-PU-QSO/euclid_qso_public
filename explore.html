@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore | Euclid High-z Quasar Team</title>
+    <meta
+      name="description"
+      content="Prototype exploration page for the Euclid high-z quasar team."
+    />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("euclid-site-theme");
+          document.documentElement.dataset.theme =
+            theme === "dark" || theme === "light" ? theme : "light";
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/png" href="assets/logo/icon.png" />
+    <link rel="preload" as="image" href="assets/test/bh.png" />
+    <link rel="preload" as="image" href="assets/test/bh_light.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script defer src="assets/published-sample.js"></script>
+    <script defer src="assets/sky-map-overlays.js"></script>
+    <script defer src="assets/generated/gaia-equirectangular-inline.js"></script>
+    <script defer src="assets/site-data.js"></script>
+    <script defer src="assets/site.js"></script>
+  </head>
+  <body data-page="explore">
+    <div class="site-scene" aria-hidden="true">
+      <img
+        class="site-blackhole-image site-blackhole-light"
+        src="assets/test/bh_light.png"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <img
+        class="site-blackhole-image site-blackhole-dark"
+        src="assets/test/bh.png"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html">
+          <img class="brand-logo" src="assets/logo/Euclid_logo.png" alt="Euclid logo" />
+          <span class="brand-copy">
+            <small>Public Science Portal</small>
+            <strong>Euclid High-z Quasar Team</strong>
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a data-nav="home" href="index.html">Home</a>
+          <a data-nav="explore" href="explore.html">Explore</a>
+          <a data-nav="papers" href="papers.html">Papers</a>
+          <a data-nav="data" href="data.html">Data</a>
+          <a data-nav="team" href="team.html">Team</a>
+          <button class="site-theme-toggle" type="button" data-theme-toggle>Dark</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="plot-section">
+          <div class="plot-layout">
+            <div class="plot-card">
+              <div class="plot-header">
+                <div>
+                  <strong>Illustrative Euclid and published comparison samples</strong>
+                  <span>Public demo view with perturbed Euclid measurements and a published comparison sample</span>
+                </div>
+                <div class="legend">
+                  <span><i class="legend-dot euclid"></i>Euclid quasars</span>
+                  <span><i class="legend-dot other"></i>Fan, Banados, Simcoe 2023</span>
+                </div>
+              </div>
+              <div class="plot-toolbar">
+                <p class="plot-instruction">Drag inside the plot to zoom. Click a Euclid quasar for illustrative placeholder previews.</p>
+              </div>
+              <div class="plot-stage" id="plot-stage">
+                <svg
+                  id="quasar-plot"
+                  class="quasar-plot"
+                  viewBox="0 0 760 430"
+                  role="img"
+                  aria-label="Scatter plot of redshift versus ultraviolet absolute magnitude"
+                ></svg>
+                <button
+                  class="plot-reset-floating"
+                  id="plot-reset-button"
+                  type="button"
+                  disabled
+                >
+                  Reset
+                </button>
+                <div class="plot-point-preview" id="explore-point-preview" hidden></div>
+              </div>
+              <noscript>
+                <p class="noscript-note">The interactive plot requires JavaScript.</p>
+              </noscript>
+            </div>
+
+            <aside class="detail-card" id="quasar-detail">
+              <div class="detail-card-scroll">
+                <p class="eyebrow">Object detail</p>
+                <h3>Illustrative public sample</h3>
+                <div class="detail-grid">
+                  <article>
+                    <span>Coordinates</span>
+                    <strong>Perturbed in public demo</strong>
+                  </article>
+                  <article>
+                    <span>Redshift</span>
+                    <strong>Illustrative</strong>
+                  </article>
+                  <article>
+                    <span>Muv</span>
+                    <strong>Illustrative</strong>
+                  </article>
+                  <article>
+                    <span>J-band magnitude</span>
+                    <strong>Illustrative</strong>
+                  </article>
+                </div>
+                <div class="detail-linked-papers">
+                  <h4 class="eyebrow">Papers including this object</h4>
+                  <ul>
+                    <li>
+                      <span>The interactive view loads the current demo object after JavaScript initializes.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="plot-section">
+          <div class="plot-card sky-map-card">
+            <div class="plot-header">
+              <div>
+                <strong>Euclid quasar sky map</strong>
+                <span>Hammer projection in equatorial coordinates, with the Gaia all-sky view, Euclid survey footprint, and Galactic plane.</span>
+              </div>
+              <div class="legend">
+                <span><i class="legend-dot sky-quasar"></i>Euclid quasars</span>
+                <span><i class="legend-dot footprint"></i>Euclid footprint</span>
+                <span><i class="legend-dot galactic"></i>Galactic plane</span>
+              </div>
+            </div>
+            <div class="sky-map-stage">
+              <canvas
+                id="sky-map-background-canvas"
+                class="sky-map-background-canvas"
+                width="960"
+                height="560"
+                aria-hidden="true"
+              ></canvas>
+              <svg
+                id="sky-map"
+                class="sky-map"
+                viewBox="0 0 960 560"
+                role="img"
+                aria-label="All-sky map of Euclid quasars in equatorial coordinates"
+              ></svg>
+              <div class="plot-point-preview plot-point-preview-wide" id="sky-map-point-preview" hidden></div>
+            </div>
+            <p class="sky-map-note">
+              RA increases to the left. Drag horizontally to change the central right ascension. Public demo points use perturbed source positions and placeholder previews.
+            </p>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="site-footer">
+        <p></p>
+        <p>Page designed by Daming Yang</p>
+      </footer>
+
+      <div class="catalog-popover" id="catalog-popover" hidden></div>
+    </div>
+  </body>
+</html>

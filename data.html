@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data | Euclid High-z Quasar Team</title>
+    <meta
+      name="description"
+      content="Prototype public data page for the Euclid high-z quasar team."
+    />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("euclid-site-theme");
+          document.documentElement.dataset.theme =
+            theme === "dark" || theme === "light" ? theme : "light";
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/png" href="assets/logo/icon.png" />
+    <link rel="preload" as="image" href="assets/test/bh.png" />
+    <link rel="preload" as="image" href="assets/test/bh_light.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script defer src="assets/published-sample.js"></script>
+    <script defer src="assets/site-data.js"></script>
+    <script defer src="assets/site.js"></script>
+  </head>
+  <body data-page="data">
+    <div class="site-scene" aria-hidden="true">
+      <img
+        class="site-blackhole-image site-blackhole-light"
+        src="assets/test/bh_light.png"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <img
+        class="site-blackhole-image site-blackhole-dark"
+        src="assets/test/bh.png"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html">
+          <img class="brand-logo" src="assets/logo/Euclid_logo.png" alt="Euclid logo" />
+          <span class="brand-copy">
+            <small>Public Science Portal</small>
+            <strong>Euclid High-z Quasar Team</strong>
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a data-nav="home" href="index.html">Home</a>
+          <a data-nav="explore" href="explore.html">Explore</a>
+          <a data-nav="papers" href="papers.html">Papers</a>
+          <a data-nav="data" href="data.html">Data</a>
+          <a data-nav="team" href="team.html">Team</a>
+          <button class="site-theme-toggle" type="button" data-theme-toggle>Dark</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="card-section">
+          <div class="section-heading section-heading-row">
+            <h2>Illustrative Euclid quasar table</h2>
+            <a
+              class="button secondary"
+              href="downloads/euclid-published-sample.csv"
+              download
+              >Download illustrative table</a
+            >
+          </div>
+          <div class="table-shell">
+            <table class="catalog-table">
+              <thead>
+                <tr>
+                  <th scope="col" aria-sort="none">
+                    <button class="table-sort" type="button" data-sort-key="name" data-sort-type="string">
+                      <span>Name</span>
+                      <span class="table-sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="table-sort" type="button" data-sort-key="ra" data-sort-type="number">
+                      <span>RA</span>
+                      <span class="table-sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="table-sort" type="button" data-sort-key="dec" data-sort-type="number">
+                      <span>Dec</span>
+                      <span class="table-sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="table-sort" type="button" data-sort-key="redshift" data-sort-type="number">
+                      <span>z</span>
+                      <span class="table-sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="table-sort" type="button" data-sort-key="muv" data-sort-type="number">
+                      <span>Muv</span>
+                      <span class="table-sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="table-sort" type="button" data-sort-key="jmag" data-sort-type="number">
+                      <span>J-mag</span>
+                      <span class="table-sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="table-sort" type="button" data-sort-key="instrument" data-sort-type="string">
+                      <span>Instrument</span>
+                      <span class="table-sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="catalog-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="site-footer">
+        <p></p>
+        <p>Page designed by Daming Yang</p>
+      </footer>
+
+      <div class="catalog-popover" id="catalog-popover" hidden></div>
+    </div>
+  </body>
+</html>

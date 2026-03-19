@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Euclid High-z Quasar Team</title>
+    <title>Papers | Euclid High-z Quasar Team</title>
     <meta
       name="description"
-      content="Prototype website for the Euclid high-z quasar team, featuring team science, papers, and public data."
+      content="Prototype papers page for the Euclid high-z quasar team."
     />
     <script>
       (function () {
@@ -27,7 +27,7 @@
     <script defer src="assets/site-data.js"></script>
     <script defer src="assets/site.js"></script>
   </head>
-  <body data-page="home">
+  <body data-page="papers">
     <div class="site-scene" aria-hidden="true">
       <img
         class="site-blackhole-image site-blackhole-light"
@@ -66,42 +66,16 @@
       </header>
 
       <main>
-        <section class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow">Early-universe quasars with Euclid</p>
-            <h1>
-              <span class="hero-title-line">Charting luminous black holes</span>
-              <span class="hero-title-line">across the first billion years.</span>
-            </h1>
-            <p class="lede">
-              This public portal presents the Euclid high-z quasar team as a
-              public-facing science program. The interactive Explore and Data
-              pages use an illustrative demo sample with intentionally perturbed
-              source properties and placeholder previews.
-            </p>
-            <div class="hero-actions">
-              <a class="button primary" href="explore.html">Explore</a>
-              <a class="button secondary" href="papers.html">Browse Team Papers</a>
-            </div>
+        <section class="card-section">
+          <div class="section-heading">
+            <p class="eyebrow">Selected bibliography</p>
+            <h2>All papers</h2>
           </div>
-
-          <aside class="hero-panel">
-            <div class="metric-strip">
-              <article>
-                <span>Total Euclid quasars</span>
-                <strong id="home-metric-quasars">0</strong>
-              </article>
-              <article>
-                <span>Published papers</span>
-                <strong id="home-metric-papers">0</strong>
-              </article>
-            </div>
-            <p>
-              The design direction is editorial rather than sci-fi: survey-grid
-              structure, paper-like spacing, and astronomy figures used as content
-              instead of decoration.
-            </p>
-          </aside>
+          <div class="paper-toolbar">
+            <div class="paper-filters" id="paper-filters" aria-label="Paper keyword filters"></div>
+            <div class="paper-view-toggle" id="paper-view-toggle" aria-label="Paper view mode"></div>
+          </div>
+          <div class="paper-grid" id="papers-grid"></div>
         </section>
       </main>
 
