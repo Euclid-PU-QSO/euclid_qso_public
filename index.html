@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Euclid High-z Quasar Team</title>
+    <meta
+      name="description"
+      content="Public portal for the Euclid high-z quasar team."
+    />
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("euclid-site-theme");
+          document.documentElement.dataset.theme =
+            theme === "dark" || theme === "light" ? theme : "light";
+        } catch (error) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="icon" type="image/png" href="assets/logo/icon.png" />
+    <link rel="preload" as="image" href="assets/test/bh.png" />
+    <link rel="preload" as="image" href="assets/test/bh_light.png" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script defer src="assets/home.js"></script>
+  </head>
+  <body data-page="home">
+    <div class="site-scene" aria-hidden="true">
+      <img
+        class="site-blackhole-image site-blackhole-light"
+        src="assets/test/bh_light.png"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <img
+        class="site-blackhole-image site-blackhole-dark"
+        src="assets/test/bh.png"
+        alt=""
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html">
+          <img class="brand-logo" src="assets/logo/Euclid_logo.png" alt="Euclid logo" />
+          <span class="brand-copy">
+            <small>Public Science Portal</small>
+            <strong>Euclid High-z Quasar Team</strong>
+          </span>
+        </a>
+        <nav class="site-nav" aria-label="Primary">
+          <a data-nav="home" href="index.html">Home</a>
+          <a href="#" aria-disabled="true">Explore</a>
+          <a href="#" aria-disabled="true">Papers</a>
+          <a href="#" aria-disabled="true">Data</a>
+          <a href="#" aria-disabled="true">Team</a>
+          <button class="site-theme-toggle" type="button" data-theme-toggle>Dark</button>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Early-universe quasars with Euclid</p>
+            <h1>
+              <span class="hero-title-line">Charting luminous black holes</span>
+              <span class="hero-title-line">across the first billion years.</span>
+            </h1>
+            <p class="lede">
+              This public landing page introduces the Euclid high-z quasar team and
+              the science goals of the program while the full public portal is being
+              prepared.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#">Explore</a>
+              <a class="button secondary" href="#">Browse Team Papers</a>
+            </div>
+          </div>
+
+          <aside class="hero-panel">
+            <div class="metric-strip">
+              <article>
+                <span>Total Euclid quasars</span>
+                <strong>30</strong>
+              </article>
+              <article>
+                <span>Published papers</span>
+                <strong>3</strong>
+              </article>
+            </div>
+            <p>
+              The design direction is editorial rather than sci-fi: survey-grid
+              structure, paper-like spacing, and astronomy figures used as content
+              instead of decoration.
+            </p>
+          </aside>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p></p>
+        <p>Page designed by Daming Yang</p>
+      </footer>
+    </div>
+  </body>
+</html>
