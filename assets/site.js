@@ -880,16 +880,27 @@
       return;
     }
 
-    function surname(name) {
+    function firstName(name) {
       const parts = String(name).trim().split(/\s+/);
-      return parts[parts.length - 1] || name;
+      return parts[0] || name;
     }
 
-    const sortedTeam = [...data.team].sort(
-      (firstMember, secondMember) =>
-        surname(firstMember.name).localeCompare(surname(secondMember.name)) ||
+    function sortPriority(member) {
+      return Number.isFinite(member.sortPriority) ? member.sortPriority : 999;
+    }
+
+    const sortedTeam = [...data.team].sort((firstMember, secondMember) => {
+      const priorityDifference = sortPriority(firstMember) - sortPriority(secondMember);
+
+      if (priorityDifference) {
+        return priorityDifference;
+      }
+
+      return (
+        firstName(firstMember.name).localeCompare(firstName(secondMember.name)) ||
         firstMember.name.localeCompare(secondMember.name)
-    );
+      );
+    });
 
     const state = {
       view: "cards"

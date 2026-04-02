@@ -89,8 +89,9 @@ window.EuclidSiteData = {
     },
     {
       name: "Jan-Torge Schindler",
-      role: "Faculty",
-      affiliation: "Hamburg Observatory, Faculty",
+      role: "Faculty, co-lead",
+      affiliation: "Hamburg Observatory, Faculty, co-lead",
+      sortPriority: 0,
       focus: "Quasar selection and survey analysis.",
       image: null
     },
@@ -110,8 +111,9 @@ window.EuclidSiteData = {
     },
     {
       name: "Daniel Mortlock",
-      role: "Faculty",
-      affiliation: "Imperial College London, Faculty",
+      role: "Faculty, co-lead",
+      affiliation: "Imperial College London, Faculty, co-lead",
+      sortPriority: 1,
       focus: "Quasar demographics and survey interpretation.",
       image: null
     },
